@@ -1,16 +1,17 @@
-[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
+# Проект: Mesto
+---
 
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
-  
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
+# Технологии
+1. JavaScript
+2. Express
+3. MongoDb
 
-Адрес репозитория: https://github.com/...
+## Запуск проекта
+`npm run start`
+`npm run dev`
 
-## Ссылки на проект
+# Ссылка на репозиторий
+https://github.com/JustRex-ctrl/express-mesto-gha
 
-IP-адрес x.x.x.x
 
-Frontend https://...
 
-Backend https://...
