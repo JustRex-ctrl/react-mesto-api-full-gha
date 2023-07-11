@@ -1,0 +1,12 @@
+.header__nav_active {
+    display: block;
+    height: 120px;
+    width: 100%;
+}
+
+@media screen and (max-width: 450px) {
+    .header__nav_active {
+      padding-left: 10px;
+    
+    }
+}

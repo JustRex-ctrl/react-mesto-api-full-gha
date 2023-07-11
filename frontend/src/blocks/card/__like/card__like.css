@@ -1,0 +1,17 @@
+.card__like {
+  max-width: 22px;
+  min-height: 19px;
+  padding: 0 20px 0 10px;
+  background-image: url(../../../images/logo/Group.svg);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 320px) {
+  .card__like {
+    padding: 0 30px 0 10px;
+  }
+}

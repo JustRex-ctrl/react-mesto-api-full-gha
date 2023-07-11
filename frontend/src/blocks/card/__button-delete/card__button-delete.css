@@ -1,0 +1,15 @@
+.card__button-delete {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 19px;
+
+  right: 20px;
+  top: 19px;
+  background-image: url(../../../images/logo/TrashCan.svg);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  background-color: transparent;
+}

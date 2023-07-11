@@ -1,0 +1,12 @@
+.card__like_active {
+  max-width: 22px;
+  min-height: 19px;
+  padding: 0 20px 0 10px;
+  background-image: url(../../../../images/logo/black-like.svg);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  background-color: transparent;
+
+}
