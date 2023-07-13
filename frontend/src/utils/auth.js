@@ -1,4 +1,4 @@
-export const BASE_URL = "https://mestobackendrex.nomoredomains.work";
+export const BASE_URL = 'https://mestobackendrex.nomoredomains.work';
 
 function handleResponce(res) {
   if (res.ok) {

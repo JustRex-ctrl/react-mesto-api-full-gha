@@ -32,7 +32,6 @@ const getMenu = (onClick, pathname, setNavActive) => {
 function Header(props) {
   const [navActive, setNavActive] = useState(false);
   const {pathname} = useLocation();
-  debugger
     return (
       <header className="header">
         <img className="header__logo" src={logo} alt="Место"/>
