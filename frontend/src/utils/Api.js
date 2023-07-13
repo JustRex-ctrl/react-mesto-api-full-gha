@@ -79,7 +79,7 @@ class Api {
 }
 
 const apiSetting = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-62',
+  url: 'https://mestobackendrex.nomoredomains.work',
   headers: {
     authorization: '92d09fa8-d610-4d7c-90e6-e3a6e285db98',
     'Content-Type': 'application/json'
