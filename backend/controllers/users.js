@@ -112,7 +112,7 @@ const login = (req, res, next) => {
             console.log('2');
             const token = jwt.sign({ _id: user._id }, 'secret-key');
             console.log('token', token);
-            res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true });
+            res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: 'None' });
             res.send(user.deletePassword());
           } else {
             throw new NotAuthError('Not valid user');
