@@ -9,7 +9,7 @@ const cors = require('cors');
 const handleError = require('./middlewares/handleError');
 const router = require('./routes/index');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3001, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 app.use(cors({ origin: ['http://localhost:3000', 'https://mestofrontrex.nomoredomains.work/'], credentials: true }));
 
