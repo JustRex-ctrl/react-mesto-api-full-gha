@@ -1,17 +1,16 @@
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/NotAuthError');
+const { setSecretKey } = require('./secretKey');
 
 module.exports = (req, res, next) => {
+  if (req.method === 'OPTIONS') next();
   const token = req.cookies.jwt;
-  if (!token) {
-    return next(new NotAuthError('Not auth error'));
-  }
   let payload;
   try {
-    payload = jwt.verify(token, 'secret-key');
+    payload = jwt.verify(token, setSecretKey());
   } catch (err) {
-    next(new NotAuthError('Invalid token'));
+    next(new NotAuthError('Токен некорректен'));
   }
   req.user = payload;
-  return next();
+  next();
 };
