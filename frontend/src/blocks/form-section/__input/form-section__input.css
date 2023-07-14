@@ -1,0 +1,15 @@
+.form-section__input {
+  background-color: transparent;
+  max-height: 28px;
+  margin: 0;
+  padding: 0 0 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  line-height: 17px;
+  border: none;
+  border-bottom: 2px solid #CCCCCC;
+  width: 100%;
+  outline: none;
+}

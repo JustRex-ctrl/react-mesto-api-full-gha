@@ -1,56 +1,18 @@
-import logo from '../images/logo/Vector.svg';
-import { Link, useLocation } from "react-router-dom";
-import Hamburger from 'hamburger-react';
-import { useState } from 'react';
+import logo from '../images/header-logo.svg';
+import { Link, Routes, Route } from 'react-router-dom';
 
-const getMenu = (onClick, pathname, setNavActive) => { 
-
-  if (pathname === '/sign-up') {
-    return <Link
-        to='/sign-in'
-        className="header__link"
-        type="button"
-        onClick={onClick}>
-        Вход
-      </Link>
-  }
-
-  if(pathname === '/sign-in') {
-    return  <Link
-      to='/sign-up'
-      className="header__link"
-      type="button"
-      onClick={onClick}>
-      Регистрация
-    </Link>
-  }
-  return <Hamburger color='white' onToggle={toggle => {
-    setNavActive(toggle);
-   }}/>
-  
+function Header({ loggedIn, userEmail, onSignout }) {
+  return (
+    <header className="header">
+        <img className="header__logo" src={logo} alt="логотип Место"/>
+        <span className="header__user-email">{loggedIn && userEmail}</span>
+        <Routes>
+          <Route path='/sign-in' element={<Link className="header__link" to='/sign-up'>Регистрация</Link>} />
+          <Route path='/sign-up' element={<Link className="header__link" to='/sign-in'>Вход</Link>} />
+          <Route path='/' element={<Link onClick={onSignout} className="header__link" to='/sign-in'>Выход</Link>} />
+        </Routes>
+    </header>
+  );
 }
-function Header(props) {
-  const [navActive, setNavActive] = useState(false);
-  const {pathname} = useLocation();
-    return (
-      <header className="header">
-        <img className="header__logo" src={logo} alt="Место"/>
-        <div className={`header__nav ${navActive ? 'header__nav_active':''}`}>
-        <p className="header__user-email">{props.email}</p>
-        <Link
-          to={props.route}
-          className="header__link"
-          type="button"
-          onClick={props.onClick}>
-          {props.title}
-        </Link>
-      </div>
-      <div className='header__hamburger'>
-        {getMenu(props.onClick, pathname, setNavActive)}
-      </div>
-      </header>  
 
-    );
-  }
-  
-  export default Header;
+export default Header;

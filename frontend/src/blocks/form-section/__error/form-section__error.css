@@ -1,0 +1,9 @@
+.form-section__error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: red;
+  min-height: 28px;
+  transition: .3s;
+  display: block;
+}

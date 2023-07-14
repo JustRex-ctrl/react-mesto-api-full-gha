@@ -1,0 +1,10 @@
+.form-section__button_disablded {
+  background: #FFFFFF;
+  cursor: default;
+  opacity: .6;
+}
+
+.form-section__button_disablded:hover {
+  cursor: default;
+  opacity: .6;
+}

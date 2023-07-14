@@ -1,0 +1,9 @@
+.form-section__link {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.form-section__link:hover {
+  opacity: .6;
+}

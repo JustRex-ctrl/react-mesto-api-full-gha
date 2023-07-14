@@ -1,37 +1,50 @@
-import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card({card, onCardClick, onCardLike, onCardDelete}) {
-  const currentUser = React.useContext(CurrentUserContext);
-
-  const isOwner = (card.owner._id === currentUser._id) ? true : false;
-  const isLiked = card.likes.some(item => item._id === currentUser._id);
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  const { _id } = useContext(CurrentUserContext);
+  
+  const isOwner = card.owner === _id;
+  const isLiked = card.likes.some(item => item === _id);
 
   function handleLikeClick() {
     onCardLike(card, isLiked);
-  }
-
-  function handleCardDelete() {
-    onCardDelete(card._id);
   }
 
   function handleCardClick() {
     onCardClick(card);
   }
 
-    return (
-        <div className="card">
-          {isOwner && <button className="card__button-delete link-hover" onClick={handleCardDelete}/>}   
-          <img className="card__place-image" src={card.link} alt={card.name} onClick={handleCardClick}/>
-          <div className="card__caption-place">
-            <p className="card__name-place">{card.name}</p>
-            <div className="card__like_container">
-              <button className={`card__like link-hover ${isLiked && 'card__like_active'}`} onClick={handleLikeClick} type="button"></button>
-              <span className="element__like-counter">{card.likes.length}</span>
-            </div>
-          </div>
+  function handleCardDelete() {
+    onCardDelete(card._id);
+  }
+  
+  return (
+    <li className="element">
+      {isOwner && 
+        <button 
+          type="button" 
+          className="element__trash" 
+          name="trash" 
+          aria-label="Удалить" 
+          onClick={handleCardDelete}
+        />
+      }
+      <img className="element__image" src={card.link} alt={card.name} onClick={handleCardClick}/>
+      <div className="element__bottom">
+        <h2 className="element__title">{card.name}</h2>
+        <div className="element__like-area">
+          <button 
+            type="button" 
+            className={`element__like ${isLiked && 'element__like_active'}`} 
+            name="like" aria-label="Лайк"
+            onClick={handleLikeClick}
+          />
+          <span className="element__number-of-likes">{card.likes.length}</span>
+        </div>
       </div>
-    );
+    </li>
+  );
 }
 
 export default Card;

@@ -1,0 +1,8 @@
+.element__bottom {
+  display: grid;
+  justify-content: space-between;
+  padding: 25px 20px;
+  margin: 0;
+  grid-template-columns: auto min-content;
+  column-gap: 10px;
+}

@@ -1,88 +1,82 @@
 class Api {
   constructor(config) {
-    this._url = config.url;
+    this._baseUrl = config.baseUrl;
     this._headers = config.headers;
   }
 
-  _handleResponce(res) {
+  _handleFirstResponse(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  installAvatar(newLink) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: newLink,
-      }),
-    }).then(res => this._handleResponce(res));
+  _request(endpoint, options) {
+    const { method, headers, body } = options;
+    return fetch(`${this._baseUrl + endpoint}`, { credentials: 'include', method, headers, body }).then(this._handleFirstResponse);
   }
 
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
-    }).then(res => this._handleResponce(res));
+    return this._request('/users/me', { headers: this._headers });
   }
 
-  setUserInfo({ name, about }) {
-    return fetch(`${this._url}/users/me`, {
+  patchUserInfo(data) {
+    return this._request('/users/me', {
+      method: 'PATCH',
       headers: this._headers,
-      method: "PATCH",
       body: JSON.stringify({
-        name: name,
-        about: about,
-      }),
-    }).then(res => this._handleResponce(res));
+        name: data.name,
+        about: data.about
+      })
+    });
+  }
+
+  patchAvatar({ avatar }) {
+    return this._request('/users/me/avatar', {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    });
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: this._headers,
-    }).then(res => this._handleResponce(res));
-
+    return this._request('/cards', {headers: this._headers});
   }
 
-  getPlaceCard(cardElement) {
-    return fetch(`${this._url}/cards`, {
-      method: "POST",
+  postCard(cardData) {
+    return this._request('/cards', {
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: cardElement.name,
-        link: cardElement.link,
-      }),
-    }).then(res => this._handleResponce(res));
-  }
-
-  likeCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(res => this._handleResponce(res));
-  }
-
-  likeRemove(cardId) {
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(res => this._handleResponce(res));
+        name: cardData.name,
+        link: cardData.link
+      })
+    });
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}`, {
-      method: "DELETE",
+    return this._request(`/cards/${cardId}`, {
+      method: 'DELETE',
       headers: this._headers,
-    }).then(res => this._handleResponce(res));
+    });
+  }
+  
+  clickLike(cardId, isLiked) {
+    return this._request(`/cards/${cardId}/likes`, {
+      method: isLiked ? 'DELETE' : 'PUT',
+      headers: this._headers,
+    });
   }
 }
 
-const apiSetting = new Api({
-  url: 'https://mestobackendrex.nomoredomains.work',
+const api = new Api({
+  baseUrl: 'https://mestobackendrex.nomoredomains.work',
+  // baseUrl: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-export default apiSetting;
+export default api;

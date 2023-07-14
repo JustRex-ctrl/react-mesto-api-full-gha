@@ -1,63 +1,48 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Form from './Form';
+import useFormWithValidation from '../utils/useFormWithValidation';
 
-export function Register({ handleRegister }) {
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+function Register({ onRegister }) {
+  const { values, errors, handleChange, isValid } = useFormWithValidation();
+  
+  function handleSubmit(e) {
     e.preventDefault();
-    handleRegister(formValue.email, formValue.password);
-  };
+    const { email, password } = values;
+    onRegister({ email, password });
+  }
 
   return (
-    <section className="login-page">
-      <div className="login-page__container">
-        <h1 className="login-page__title">Регистрация</h1>
-        <form className="login-page__form" onSubmit={handleSubmit}>
-          <input
-            className="login-page__input"
-            type="email"
-            id="email"
-            name="email"
-            placeholder="E-mail"
-            value={formValue.email}
-            onChange={handleChange}
-            required>  
-          </input>
-          <input
-            className="login-page__input"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            value={formValue.password}
-            onChange={handleChange}
-            required>
-          </input>
-          <button className="login-page__submit" type="submit">
-            Зарегистрироваться
-          </button>
-        </form>
-        <div className="login-page__name-auth">
-         <p className="login-page__name-button">
-           Уже зарегистрированы?{" "}
-         </p>
-         <Link to="/sign-in" className="login-page__enter">Войти</Link>
-        </div>
-
-      </div>
-    </section>
+    <Form
+      title='Регистрация'
+      buttonText='Зарегистрироваться'
+      onSubmit={handleSubmit}
+      isFormValid={isValid}
+    >
+      <fieldset className='form-section__fieldset'>
+        <input 
+          value={values.email || ''}
+          onChange={handleChange} 
+          name='email' 
+          className='form-section__input' 
+          type='email' 
+          placeholder='Email' 
+          required='required' 
+        />
+        <span className='form-section__error'>{errors.email}</span>
+        <input 
+          value={values.password || ''}
+          onChange={handleChange} 
+          name='password' 
+          className='form-section__input' 
+          type='password' 
+          placeholder='Пароль' 
+          minLength='3' 
+          required='required'
+        />
+        <span className='form-section__error'>{errors.password}</span>
+      </fieldset>
+    </Form>
   );
 }
+
+export default Register;

@@ -1,58 +1,47 @@
-import React from "react";
-import { useState } from "react";
+import Form from './Form';
+import useFormWithValidation from '../utils/useFormWithValidation';
 
-export function Login({ handleLogin }) {
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+function Login({ onLogin }) {
+  
+  const { values, errors, handleChange, isValid } = useFormWithValidation();
+  
+  function handleSubmit(e) {
     e.preventDefault();
-
-    handleLogin(formValue.email, formValue.password);
-  };
+    onLogin(values);
+  }
 
   return (
-    <section className="login-page">
-      <div className="login-page__container">
-        <h1 className="login-page__title">Вход</h1>
-        <form className="login-page__form" onSubmit={handleSubmit}>
-          <input
-            className="login-page__input"
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            value={formValue.email}
-            onChange={handleChange}
-            required
-          ></input>
-          <input
-            className="login-page__input"
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formValue.password}
-            onChange={handleChange}
-            required
-          ></input>
-          <button
-            className="login-page__submit"
-            type="button"
-            onClick={handleSubmit}
-          >
-            Войти
-          </button>
-        </form>
-      </div>
-    </section>
+    <Form
+      title='Вход'
+      buttonText='Войти'
+      onSubmit={handleSubmit}
+      isFormValid={isValid}
+    >
+      <fieldset className='form-section__fieldset'>
+        <input 
+          value={values.email || ''}
+          onChange={handleChange} 
+          name='email' 
+          className='form-section__input' 
+          type='email' 
+          placeholder='Email' 
+          required='required' 
+        />
+        <span className='form-section__error'>{errors.email}</span>
+        <input 
+          value={values.password || ''}
+          onChange={handleChange} 
+          name='password' 
+          className='form-section__input' 
+          type='password' 
+          placeholder='Пароль' 
+          minLength='3' 
+          required='required'
+        />
+        <span className='form-section__error'>{errors.password}</span>
+      </fieldset>
+    </Form>
   );
 }
+
+export default Login;

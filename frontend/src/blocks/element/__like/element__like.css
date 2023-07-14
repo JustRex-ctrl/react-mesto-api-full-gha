@@ -1,0 +1,15 @@
+.element__like {
+  align-self: center;
+  width: 22px;
+  height: 19px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: url(../../../images/element-heart.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.element__like:hover {
+  opacity: .5;
+}

@@ -1,34 +1,60 @@
-export const BASE_URL = 'https://mestobackendrex.nomoredomains.work';
-
-function handleResponce(res) {
-  if (res.ok) {
-    return res.json();
+class Auth {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
+
+  _handleFirstResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`)
+  }
+
+  _request(endpoint, options) {
+    return fetch(`${this._baseUrl + endpoint}`, options).then(this._handleFirstResponse);
+  }
+
+  registration({ password, email }) {
+    return this._request('/signup', {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        "email" : email,
+        "password": password
+      })
+    });
+  }
+
+  login({ password, email }) {
+    return this._request('/signin', {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        "email" : email,
+        "password" : password
+      })
+    });
+  }
+
+  checkToken() {
+    return this._request('/users/me', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'aplication/json',
+      }
+    });
+  }
 }
 
-export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  }).then(handleResponce);
-};
+const auth = new Auth({
+  baseUrl: 'https://mestobackendrex.nomoredomains.work',
+  // baseUrl: 'http://localhost:3000',
+  headers: { 
+    'Content-Type': 'application/json' 
+  }
+});
 
-export const authorization = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  }).then(handleResponce);
-};
-
-export const getContent = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(handleResponce);
-};
+export default auth;
