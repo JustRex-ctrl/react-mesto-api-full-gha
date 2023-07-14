@@ -17,12 +17,13 @@ class Api {
   }
 
   getUserInfo() {
-    return this._request('/users/me', { headers: this._headers });
+    return this._request('/users/me', {credentials: 'include', headers: this._headers });
   }
 
   patchUserInfo(data) {
     return this._request('/users/me', {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -34,6 +35,7 @@ class Api {
   patchAvatar({ avatar }) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar
@@ -42,12 +44,13 @@ class Api {
   }
 
   getInitialCards() {
-    return this._request('/cards', {headers: this._headers});
+    return this._request('/cards', {credentials: 'include', headers: this._headers});
   }
 
   postCard(cardData) {
     return this._request('/cards', {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: cardData.name,
@@ -59,6 +62,7 @@ class Api {
   deleteCard(cardId) {
     return this._request(`/cards/${cardId}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -66,6 +70,7 @@ class Api {
   clickLike(cardId, isLiked) {
     return this._request(`/cards/${cardId}/likes`, {
       method: isLiked ? 'DELETE' : 'PUT',
+      credentials: 'include',
       headers: this._headers,
     });
   }
