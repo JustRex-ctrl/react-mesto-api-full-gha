@@ -78,7 +78,7 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://mestobackendrex.nomoredomains.work',
-  // baseUrl: 'http://localhost:3000',
+  // baseUrl: 'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json'
   }
