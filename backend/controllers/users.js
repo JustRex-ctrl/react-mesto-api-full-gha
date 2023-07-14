@@ -104,10 +104,14 @@ const login = (req, res, next) => {
     .select('+password')
     .orFail(() => new NotAuthError('Not valid user'))
     .then((user) => {
+      console.log('0');
       bcrypt.compare(String(password), user.password)
         .then((isUserValid) => {
+          console.log('1');
           if (isUserValid) {
+            console.log('2');
             const token = jwt.sign({ _id: user._id }, 'secret-key');
+            console.log('token', token);
             res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true });
             res.send(user.deletePassword());
           } else {
