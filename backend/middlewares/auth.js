@@ -1,21 +1,16 @@
-const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const NotAuthError = require('../errors/NotAuthError');
+const { setSecretKey } = require('./secretKey');
 
-module.exports.validateToken = (req, res, next) => {
+module.exports = (req, res, next) => {
+  if (req.method === 'OPTIONS') next();
   const token = req.cookies.jwt;
   let payload;
-
   try {
-    payload = jwt.verify(
-      token,
-      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-    );
+    payload = jwt.verify(token, setSecretKey());
   } catch (err) {
-    return next(new NotAuthError('Authorization required'));
+    next(new NotAuthError('Токен некорректен'));
   }
-
   req.user = payload;
-
-  return next();
+  next();
 };
