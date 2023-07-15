@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const handleError = require('./middlewares/handleError');
 const router = require('./routes/index');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
@@ -16,6 +17,8 @@ app.use(cors({ origin: ['http://localhost:3000', 'https://mestofrontrex.nomoredo
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });
+
+app.use(requestLogger);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -30,6 +33,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(router);
+app.use(errorLogger);
 app.use(errors());
 app.use(handleError);
 
