@@ -16,9 +16,9 @@ https://github.com/JustRex-ctrl/express-mesto-gha
 
 # Ссылка на проект
 
-IP 158.160.52.17
-Frontend https://mestofrontrex.nomoredomains.work/
-Backend https://mestobackendrex.nomoredomains.work/
+IP 158.160.52.17  
+Frontend https://mestofrontrex.nomoredomains.work/  
+Backend https://mestobackendrex.nomoredomains.work/  
 
 
 
