@@ -11,7 +11,7 @@ const router = require('./routes/index');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
-app.use(cors({ origin: ['http://localhost:3000', 'https://mestofrontrex.nomoredomains.work'] }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://mestofrontrex.nomoredomains.work'], credentials: true }));
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
