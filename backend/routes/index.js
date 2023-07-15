@@ -7,6 +7,12 @@ const { userValidSchema, loginSchema } = require('../middlewares/joi-schemas');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../errors/NotFoundError');
 
+router.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 router.post('/signup', celebrate({ body: userValidSchema }), createUser);
 router.post('/signin', celebrate({ body: loginSchema }), login);
 router.use(auth);
